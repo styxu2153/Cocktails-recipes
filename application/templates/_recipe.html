@@ -1,0 +1,9 @@
+<tr>
+  <td width="20%">{{ recipe.name }}</td>
+  <td width="60%">{{ recipe.ingredients }}</td>
+  <td>{% if recipe.need_for_shaker %} YES {% else %} NO {% endif %}</td>
+  <td>
+    <a href="{{ url_for('main.update_recipe', recipe_name=recipe.name) }}"><button class="btn btn-sm" type="button" id="recipe_update"><i>{{ utils.icon("pencil") }}</i></button></a>
+    <a href="{{ url_for('main.delete_recipe', recipe_name=recipe.name) }}"><button class="btn btn-sm" type="button" id="recipe_remove"><i>{{ utils.icon("remove") }}</i></button></a>
+  </td>
+</tr>

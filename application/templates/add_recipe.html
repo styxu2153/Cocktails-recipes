@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block application_styles -%}
+<style type="text/css">
+    .formList {
+        display:none;
+    }
+</style>
+{% endblock %}
+
+{% block application_content %}
+<form action="{{ url_for('main.add_recipe') }}" method="POST" class="form-horizontal">
+    {{ form.hidden_tag() }}
+    <div class="form-group col-xs-8" style="margin-bottom: 30px;">
+        <div class="col-xs-4" style="padding-right: 5px;"> {{ form.name(class_="form-control", placeholder="Recipe's name") }} </div>
+        <div class="col-xs-2 text-center" style="padding: 0px 5px;"><button class="btn" type="button" id="addNewAlcohol">Add Alcohol</button></div>
+        <div class="col-xs-2" style="padding: 0px 5px;"><button class="btn" type="button" id="addNewIngredient">Add Ingredient</button></div>
+    </div>
+    
+    <div class="form-group col-xs-8" style="margin-bottom: 0px;">
+        <div class="col-xs-8">
+            <label for="Alcohols">Alcohol(s):<br /></label>
+        </div>
+    </div>
+    <!-- Alcohol(s) as main ingredients inputs -->
+    <div id="alcoholFieldsContainer" class="form-group col-xs-8" style="margin-bottom: 0px;">
+        <div class="col-xs-6" id="alcoholFieldContainer1">
+            {{ form.alcohol_name(class_="formList") }}
+            <input class="form-control" id="alcohol_name-0" name="alcohol_name-0" placeholder="Ingredient" required="true"></br>
+        </div>
+        <div class="col-xs-2" id="alcoholFieldContainer2">
+            {{ form.alcohol_amount(class_="formList") }}
+            <input class="form-control" id="alcohol_amount-0" name="alcohol_amount-0" placeholder="Amount"></br>
+        </div>
+    </div>
+
+    <div class="form-group col-xs-8" style="margin-bottom: 0px;">
+        <div class="col-xs-8">
+            <label for="Alcohols">Other Ingredients:<br /></label>
+        </div>
+    </div>
+    <!-- Other ingredients inputs -->
+    <div class="form-group col-xs-8" style="margin-bottom: 0px">
+        <div class="col-xs-6" id="ingredientFieldContainer1">
+            {{ form.ingredient_name(class_="formList") }}
+            <input class="form-control" id="ingredient_name-0" name="ingredient_name-0" placeholder="Ingredient"></br>
+        </div>
+        <div class="col-xs-2" id="ingredientFieldContainer2">
+            {{ form.ingredient_amount(class_="formList") }}
+            <input class="form-control" id="ingredient_amount-0" name="ingredient_amount-0" placeholder="Amount"></br>
+        </div>
+    </div>
+
+    <div class="form-group col-xs-8">
+        <div class="col-xs-6">{{ form.need_shaker.label }} {{ form.need_shaker() }}</div>
+        <div class="col-xs-2">{{ form.submit(class_='btn pull-right') }}</div>
+    </div>
+    
+</form>
+{% endblock %}
+
+{% block application_scripts %}
+{{super()}}
+<script>
+var alcohol_field_num = 1;
+var ingredient_field_num = 1;
+$('#addNewAlcohol').click(function(){
+    var newInput = $("<input></br>")
+        .attr("class", "form-control")
+        .attr("id", "alcohol_name-" + alcohol_field_num)
+        .attr("name", "alcohol_name-" + alcohol_field_num)
+        .attr("placeholder", "Ingredient")
+    var newUnitInput =  $("<input></br>")
+        .attr("class", "form-control")
+        .attr("id", "alcohol_amount-" + alcohol_field_num)
+        .attr("name", "alcohol_amount-" + alcohol_field_num)
+        .attr("placeholder", "Amount")
+    $("#alcoholFieldContainer1").append(newInput)
+    $("#alcoholFieldContainer2").append(newUnitInput)
+    alcohol_field_num++; 
+});
+
+$('#addNewIngredient').click(function(){
+    var newInput = $("<input></br>")
+        .attr("class", "form-control")
+        .attr("id", "ingredient_name-" + ingredient_field_num)
+        .attr("name", "ingredient_name-" + ingredient_field_num)
+        .attr("placeholder", "Ingredient")
+    var newUnitInput =  $("<input></br>")
+        .attr("class", "form-control")
+        .attr("id", "ingredient_amount-" + ingredient_field_num)
+        .attr("name", "ingredient_amount-" + ingredient_field_num)
+        .attr("placeholder", "Amount")
+    $("#ingredientFieldContainer1").append(newInput)
+    $("#ingredientFieldContainer2").append(newUnitInput)
+    ingredient_field_num++; 
+});
+</script>
+{% endblock %}
